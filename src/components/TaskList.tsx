@@ -10,12 +10,24 @@ interface Task {
   isComplete: boolean;
 }
 
+const MAX_LIMIT = 100;
+
 export function TaskList() {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [newTaskTitle, setNewTaskTitle] = useState('');
 
   function handleCreateNewTask() {
-    // Crie uma nova task com um id random, não permita criar caso o título seja vazio.
+    if (!newTaskTitle.trim()) {
+      return;
+    }
+
+    const newTask = {
+      id: Math.floor(Math.random() * MAX_LIMIT),
+      title: newTaskTitle,
+      isComplete: false,
+    };
+
+    setTasks([...tasks, newTask]);
   }
 
   function handleToggleTaskCompletion(id: number) {
